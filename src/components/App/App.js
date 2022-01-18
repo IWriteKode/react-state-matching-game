@@ -31,7 +31,7 @@ class App extends Component{
     })
   }
 
-  handleTileClicked =(id,color)=>{
+   handleTileClicked(id,color){
 
     this.setState((state)=>{
       const tiles = state.tiles;
