@@ -34,7 +34,7 @@ class App extends Component{
       <header className="App-header">
         Turbo-Matcher
       </header>
-        <OptionsPanel start_game = {this.startGame } playing={this.state.playing} numTiles ={this.state.numTiles} />
+        <OptionsPanel startGame = {this.startGame } playing={this.state.playing} numTiles ={this.state.numTiles} />
         <Board numTiles ={this.state.numTiles} tiles = {this.state.tiles}/>
    
     </div>
