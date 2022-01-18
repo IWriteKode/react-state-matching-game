@@ -4,11 +4,12 @@ import './Tile.css'
 
 const Tile = (props) => {
 
-  const color = props.matched == true || props.selected == true ? '#00aa00' : '0000aa';
+  const dynamicColor = props.matched  || props.selected   ? {backgroundColor:props.color} : null
 
 
   return (
-    <div className='Tile'>
+    <div className='Tile' style = {dynamicColor}>
+      {props.matched  || props.selected   ? <props.svg /> : null }
     </div>
   )
 }
