@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import OptionsPanel from '../OptionsPanel'
 import Board from '../Board'
-import {createTiles } from '../../misc/utils'
+import {createTiles,indexOfSelected } from '../../misc/utils'
 
 import './App.css';
 
@@ -19,6 +19,8 @@ class App extends Component{
       }
   }
   startGame = (numTiles ) => {
+    createTiles(this.handleTileClicked);
+
     this.setState((state)=>{
       return {
         playing:true,
@@ -27,6 +29,52 @@ class App extends Component{
         tiles : createTiles(this.state.numTiles)
       }
     })
+  }
+
+  handleTileClicked =(id,color)=>{
+
+    this.setState((state)=>{
+      const tiles = state.tiles;
+      let toBeCleared = state.toBeCleared;
+      let previousTileIndex = state.previousTileIndex;
+      const selectedTileIndex = indexOfSelected(tiles,id,color);
+
+      if(previousTileIndex !== null)  {
+
+        let previousTile = tiles[previousTileIndex];
+        let selectedTile = tiles[selectedTileIndex];
+
+        if(toBeCleared !== null ){
+          tiles[toBeCleared[0]].selected = false;
+          tiles[toBeCleared[1]].selected = false;
+          toBeCleared = null;
+        }
+
+        tiles[selectedTileIndex].selected = true;
+
+        if(previousTile.id !== selectedTile.id && previousTile.color === color) {
+
+          selectedTile.matched = true;
+          previousTile.matched = true;
+          previousTileIndex = null;
+        }
+        else{
+
+          toBeCleared = [previousTileIndex,selectedTileIndex]
+          previousTileIndex  = null;
+        }
+      }
+      else{
+
+        previousTileIndex = selectedTileIndex;
+      }
+
+     
+
+      return {tiles,toBeCleared,previousTileIndex }
+    }
+    );
+    
   }
   render() {
   return (
